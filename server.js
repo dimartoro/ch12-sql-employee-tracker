@@ -15,6 +15,8 @@ const db = mysql.createConnection(
   }
 );
 
+// Async/await functions with promises to interact with MySQL database.
+
 var q = '';
 
 SelectAllElements = () =>{
@@ -522,7 +524,8 @@ function executeScript(sql){
        return;
     }
     console.table(rows);
-    return rows;
+    return rows, init();   
+
   });
 }
 
@@ -532,23 +535,23 @@ function initialPrompt(){
     .then((answers) =>{
         switch(answers.selection){
             case 'View All Employees':
-            listEmployees();
-            break;
+              listEmployees(); 
+              break;
             case 'View Employees by Manager':
-            questionsEmployeesByManager();
-            break;
+              questionsEmployeesByManager();
+              break;
             case 'View Employees by Department':
-            questionsEmployeesByDepartment();
-            break;
+              questionsEmployeesByDepartment();
+              break;
             case 'View All Roles':
-            listRoles();
-            break;
+              listRoles();
+              break;
             case 'View All Departments':
-            listDepartments();
-            break;
+              listDepartments();
+              break;
             case 'Add Department':
               questionAddDepartment();
-            break;
+              break;
             case 'Add Role':
               questionAddRole();
               break;
@@ -558,28 +561,28 @@ function initialPrompt(){
             case 'Update Employee Role':
               questionUpdateEmployee();
               break;
-              case 'Update Employee Manager':
+            case 'Update Employee Manager':
               questionUpdateEmployeeManager();
               break;
-              case 'Delete Employee':
+            case 'Delete Employee':
               questionDeleteEmployee();
               break;
-              case 'Delete Department':
+            case 'Delete Department':
               questionDeleteDepartment();
               break;
-              case 'Delete Role':
+            case 'Delete Role':
               questionDeleteRole();
               break;
-              case 'Total Utilized Budget by Department':
+            case 'Total Utilized Budget by Department':
               questionBudget();
               break;
-              case 'Total Utilized Budget for All Departments':
+            case 'Total Utilized Budget for All Departments':
               listBudgetAllDepartments();
               break;
             case 'Quit':
               process.exit(0);
               break;
-          default:
+            default:
               break;
         };
 
@@ -666,7 +669,6 @@ async function questionUpdateEmployee(){
       }
   });
 } 
-
 
 async function questionUpdateEmployeeManager(){
   const updateEmployeeManagerQuestions = await getUpdateEmployeeManagerPromptQuestions();
