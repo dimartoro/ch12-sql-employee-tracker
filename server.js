@@ -172,7 +172,7 @@ async function getUpdateEmployeeManagerPromptQuestions(){
 
 async function getEmployeesByManagerPromptQuestions(){
   var questions;
-  var employeesQuery = `select * from employee`;
+  var employeesQuery = `select * from employee where id in (select manager_id from employee)`;
   var employees = await getEmployeesToString(employeesQuery);
     questions = [
       {
@@ -349,6 +349,9 @@ function listEmployees(){
   left join employee m on 
   m.id = e.manager_id`;
   executeScript(sql);
+  setTimeout(() => {
+    initialPrompt();
+  }, 3000); 
 }
 
 async function listEmployeesByManagerName(manager){
@@ -365,6 +368,9 @@ async function listEmployeesByManagerName(manager){
   m.id = e.manager_id
   where e.manager_id = ${managerId}`;
   executeScript(sql);
+  setTimeout(() => {
+    initialPrompt();
+  }, 3000); 
 }
 
 async function listEmployeesByDepartmentName(department){
@@ -381,6 +387,9 @@ async function listEmployeesByDepartmentName(department){
   m.id = e.manager_id
   where d.id = ${departmentId}`;
   executeScript(sql);
+  setTimeout(() => {
+    initialPrompt();
+  }, 3000); 
 }
 
 async function listBudgetByDepartmentName(department){
@@ -414,16 +423,25 @@ async function listBudgetByDepartmentName(department){
       m.id = e.manager_id
       group by d.name` ;
       executeScript(sql);
+      setTimeout(() => {
+        initialPrompt();
+      }, 3000); 
  }
 
 function listRoles(){
   var sql = `SELECT r.id "Id", r.title "Job Title", d.name "Department", r.salary "Salary" FROM role r left join department d on d.id = r.department_id`;
   executeScript(sql);
+  setTimeout(() => {
+    initialPrompt();
+  }, 3000); 
 }
 
 function listDepartments(){
   var sql = `SELECT * FROM department`;
   var dpts = executeScript(sql);
+  setTimeout(() => {
+    initialPrompt();
+  }, 3000); 
 }
 
 function saveDepartment(deptName){
@@ -461,13 +479,6 @@ async function deleteRoleById(roleId){
 async function deleteEmployeeByRoleId(roleId){
   var sql = `delete from employee where role_id = ${roleId}`;
   executeScript(sql);
-}
-
-async function deleteEmployeeByEmployeeName(name){
-  var employeeId = await getEmployeeIdByFullName(name);
-  var sql = `delete from employee where id = ${employeeId}`;
-  executeScript(sql);
-  listEmployees();
 }
 
 async function deleteDepartmentByName(name,deleteDependencies){
@@ -523,8 +534,7 @@ function executeScript(sql){
        return;
     }
     console.table(rows);
-    return rows, init();   
-
+    return rows;
   });
 }
 
@@ -534,7 +544,7 @@ function initialPrompt(){
     .then((answers) =>{
         switch(answers.selection){
             case 'View All Employees':
-              listEmployees(); 
+              listEmployees();
               break;
             case 'View Employees by Manager':
               questionsEmployeesByManager();
@@ -584,7 +594,6 @@ function initialPrompt(){
             default:
               break;
         };
-
     })
     .catch((error) => {
         if (error.isTtyError) {
@@ -619,20 +628,22 @@ function questionAddDepartment(){
 }
 
 async function questionAddRole(){
-    const addRoleQuestions = await getRolePromptQuestions();
+  const addRoleQuestions = await getRolePromptQuestions();
+  return new Promise((resolve)=>{
     inquirer
     .prompt(addRoleQuestions)
     .then((answers) =>{
         saveRole(answers.role, answers.salary, answers.department);
-        addMessage('Rolew', answers.role);
+        addMessage('Role', answers.role);
     })
     .catch((error) => {
         if (error.isTtyError) {
-            console.log("Prompt couldn't be rendered in the current environment.")
+            console.log("Prompt couldn't be rendered in the current environment.");
         } else {
-          console.log("error other than prompt")
+          console.log("error other than prompt");
         }
     });
+  });
 } 
 
 async function questionAddEmployee(){
@@ -763,6 +774,9 @@ async function questionDeleteRole(){
   .then((answers) =>{
     deleteRoleByTitle(answers.role);
     deleteMessage('Role', answers.role);
+    setTimeout(() => {
+      initialPrompt();
+    }, 3000); 
   })
   .catch((error) => {
       if (error.isTtyError) {
@@ -779,6 +793,9 @@ async function questionBudget(){
   .prompt(budgetQuestions)
   .then((answers) =>{
     CalculateBudgetByDepartmentName(answers.department);
+    setTimeout(() => {
+      initialPrompt();
+    }, 3000); 
   })
   .catch((error) => {
       if (error.isTtyError) {
