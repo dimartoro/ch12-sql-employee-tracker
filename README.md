@@ -44,7 +44,7 @@ WHEN I choose to update an employee role
 THEN I am prompted to select an employee to update and their new role and this information   is updated in the database  
 
 ## Credits
-https://darifnemma.medium.com/how-to-interact-with-mysql-database-using-async-await-promises-in-node-js-9e6c81b683da
+https://darifnemma.medium.com/how-to-interact-with-mysql-database-using-async-await-promises-in-node-js-9e6c81b683da  
 https://courses.bootcampspot.com/courses/3100/assignments/48730?module_item_id=890747
 
 ## Tests
