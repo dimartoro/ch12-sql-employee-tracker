@@ -52,15 +52,7 @@ async function getRolePromptQuestions(){
   return questions;
 }
 
-async function getDepartmentAsArrayList(query){
-    q = query;
-    const results = await SelectAllElements();
-    var arr = [];    
-    for(var x = 0; x<results.length; x++){
-      arr.push(results[x].name);
-    }
-    return arr;
-}
+
 
 
 async function getEmployeePromptQuestions(){
@@ -289,6 +281,7 @@ app.use(express.json());
 
 
 function init() {
+  //console.log("8");
   initialPrompt();  
 }
 
@@ -350,8 +343,9 @@ function listEmployees(){
   m.id = e.manager_id`;
   executeScript(sql);
   setTimeout(() => {
+    //console.log("1");
     initialPrompt();
-  }, 3000); 
+  }, 2000); 
 }
 
 async function listEmployeesByManagerName(manager){
@@ -369,8 +363,9 @@ async function listEmployeesByManagerName(manager){
   where e.manager_id = ${managerId}`;
   executeScript(sql);
   setTimeout(() => {
+    //console.log("2");
     initialPrompt();
-  }, 3000); 
+  }, 2000); 
 }
 
 async function listEmployeesByDepartmentName(department){
@@ -388,8 +383,9 @@ async function listEmployeesByDepartmentName(department){
   where d.id = ${departmentId}`;
   executeScript(sql);
   setTimeout(() => {
+    //console.log("3");
     initialPrompt();
-  }, 3000); 
+  }, 2000); 
 }
 
 async function listBudgetByDepartmentName(department){
@@ -424,24 +420,27 @@ async function listBudgetByDepartmentName(department){
       group by d.name` ;
       executeScript(sql);
       setTimeout(() => {
+        //console.log("4");
         initialPrompt();
-      }, 3000); 
+      }, 2000); 
  }
 
 function listRoles(){
   var sql = `SELECT r.id "Id", r.title "Job Title", d.name "Department", r.salary "Salary" FROM role r left join department d on d.id = r.department_id`;
   executeScript(sql);
   setTimeout(() => {
+    //console.log("5");
     initialPrompt();
-  }, 3000); 
+  }, 2000); 
 }
 
 function listDepartments(){
   var sql = `SELECT * FROM department`;
   var dpts = executeScript(sql);
   setTimeout(() => {
+    //console.log("6");
     initialPrompt();
-  }, 3000); 
+  }, 2000); 
 }
 
 function saveDepartment(deptName){
@@ -774,9 +773,6 @@ async function questionDeleteRole(){
   .then((answers) =>{
     deleteRoleByTitle(answers.role);
     deleteMessage('Role', answers.role);
-    setTimeout(() => {
-      initialPrompt();
-    }, 3000); 
   })
   .catch((error) => {
       if (error.isTtyError) {
@@ -794,8 +790,9 @@ async function questionBudget(){
   .then((answers) =>{
     CalculateBudgetByDepartmentName(answers.department);
     setTimeout(() => {
+      //console.log("7");
       initialPrompt();
-    }, 3000); 
+    }, 2000); 
   })
   .catch((error) => {
       if (error.isTtyError) {
