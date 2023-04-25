@@ -52,9 +52,6 @@ async function getRolePromptQuestions(){
   return questions;
 }
 
-
-
-
 async function getEmployeePromptQuestions(){
   var questions;
   var roleQuery = 'select title from role';
