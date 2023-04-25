@@ -48,7 +48,13 @@ https://darifnemma.medium.com/how-to-interact-with-mysql-database-using-async-aw
 https://courses.bootcampspot.com/courses/3100/assignments/48730?module_item_id=890747
 
 ## Tests
-Visualizing the tables resulting of the user's data queries and the successfully messages will test the right functionality of the program.
+Visualizing the joins of hr_db tables after testing the user's selections will test the right functionality of the program.    
+
+P1. Original Seeded Tables:
+![alt "Original hr_db Seeded"](./assets/images/videoOriginalSeededhr_db.png) 
+
+P2. Resulting successful table of the application:  
+![alt "Join of hr_db tables after testing application"](./assets/images/videoFinalEmployeeTable.png)
 
 ## Email
 Contact me with additional questions at this email address:
@@ -62,5 +68,5 @@ https://github.com/dimartoro
 This app is licensed under [MIT](https://choosealicense.com/licenses/mit/) lincense
 
 ## VideoLink
-https://drive.google.com/file/d/1Ic14KwgC7xy8tJC7A5SB_llg_hcsXhf1/view
+https://drive.google.com/file/d/1ZRWuvAw-CQla1NW3y6j1wvmV2qygyOUv/view
 
